@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.custom-error-toast {
+  background-color: #f52c6f; /* Change this color to the one you prefer */
+  color: white; /* Text color, adjust as needed */
+  margin: 15px;
+}
+
+.custom-success-toast{
+  background-color: #49eb34;
+  color: white;
+  margin: 15px;
+
+}
+
