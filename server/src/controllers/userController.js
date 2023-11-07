@@ -3,6 +3,10 @@ const UserModel = require("../model/userSchema");
 const { default: OpenAI } = require("openai");
 const gtts = require("gtts");
 const fs = require("fs");
+const os = require('os');
+const path = require('path');
+
+
 
 const registerController = async (req, res) => {
   console.log("register-req:", req.body);
@@ -119,30 +123,47 @@ const generateLyrics = async (req, res) => {
   }
 };
 
+const appPrefix = 'my-app';
+
 const generateSong = async (req, res) => {
-    var path = require("path")
-  const { lyrics } = req.body;
-  console.log("lyrics:",lyrics)
-  const tts = new gtts(lyrics, "en");
-  tts.save("tmp/audio.mp3", (err, result) => {
-    if (err) {
-      console.error("errorInSaving",err);
-      return res.status(500).json({ error: "Audio generation failed" });
-    } 
-    console.log("save_success:",result)
-    res.sendFile(path.resolve("tmp/audio.mp3"),(err)=>{
-        if(err){
-            console.error("sendfileerr:",err)
-            res.status(500).json({error:'Sending audio failed'})
+  try {
+    const { lyrics } = req.body;
+    console.log("lyrics:", lyrics);
+
+    // Create a temporary directory
+    let tmpDir;
+    try {
+      tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), appPrefix));
+      const audioFilePath = path.join(tmpDir, 'audio.mp3');
+      
+      const tts = new gtts(lyrics, 'en');
+      tts.save(audioFilePath, (err, result) => {
+        if (err) {
+          console.error("errorInSaving", err);
+          return res.status(500).json({ error: "Audio generation failed" });
         }
-        fs.unlink("tmp/audio.mp3",(err)=>{
-            if(err){
-                console.error(err)
-            }
-        })
+
+        console.log("save_success:", result);
+        
+        // Send the audio file to the response
+        res.sendFile(audioFilePath, (err) => {
+          if (err) {
+            console.error("sendfileerr:", err);
+            res.status(500).json({ error: 'Sending audio failed' });
+          }
+          
+          // Clean up the temporary directory and file
+          fs.rmSync(tmpDir, { recursive: true });
+        });
+      });
+    } catch (e) {
+      console.error('An error occurred while creating a temporary directory:', e);
+      return res.status(500).json({ error: 'Temporary directory creation failed' });
     }
-    )
-  });
+  } catch (error) {
+    console.error( "error:",error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };
 
 module.exports = {
