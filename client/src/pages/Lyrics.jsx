@@ -20,13 +20,17 @@ const Lyrics = ({page}) => {
       console.log(response);
       dispatch({type:"UPDATE_LYRICS", payload:response.data.result})
       toast.success("Lyrics Recreated!",{
-        className:"custom-success-toast"
+        autoClose:2000,
+        progressBar: false,
+        className: "custom-success-toast",        
       })
     } catch (err) {
       console.log(err);
       toast.error("Something went wrong!Recreation failed",{
-        className:"custom-error-toast",
-        icon:<CustomErrorIcon/>
+        autoClose:2000,
+        progressBar:false,
+        className: "custom-error-toast",
+        icon: <CustomErrorIcon />,
       })
     }
   };
@@ -39,8 +43,9 @@ const Lyrics = ({page}) => {
       const url = URL.createObjectURL(new Blob([response.data]));
        dispatch({type:"UPDATE_AUDIO_URL",payload:url})
        toast.success("Song generated",{
-        className:"custom-success-toast",
-       })
+        autoClose:2000,
+        progressBar: false,
+        className: "custom-success-toast",       })
        navigate("/ready")
     }catch(err){
     console.error(err)

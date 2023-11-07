@@ -69,6 +69,12 @@ const OtpModal = ({ closeModal, isModalOpen , phone ,FormSubmit}) => {
 
   const handleSubmit = async () => {
     console.log("submit");
+  if(!otp) return toast.error("check whatsapp for otp!",{
+    autoClose:2000,
+    progressBar:false,
+        className: "custom-error-toast",
+        icon: <CustomErrorIcon />,
+  })
     const Data = {
       otp,
       phone,
@@ -80,12 +86,20 @@ const OtpModal = ({ closeModal, isModalOpen , phone ,FormSubmit}) => {
       }else{
         setOtp("")
         toast.error("otp incorrect",{
-          className: "custom-error-toast",
-          icon: <CustomErrorIcon />,
+          autoClose:2000,
+        progressBar:false,
+        className: "custom-error-toast",
+        icon: <CustomErrorIcon />,
         })
       }
     } catch (err) {
       console.error("otp submit failed",err);
+      toast.error("otp Incorrect!",{
+        autoClose:2000,
+        progressBar:false,
+        className: "custom-error-toast",
+        icon: <CustomErrorIcon />,
+      })
     }
   };
   const generateOtp =async () =>{
@@ -93,11 +107,19 @@ const OtpModal = ({ closeModal, isModalOpen , phone ,FormSubmit}) => {
       const { data } = await generateOtp(phone);
       console.log("otp generated:", phone);
       toast.success("New Otp generated!",{
-        className:"custom-success-toast"
+        className:"custom-success-toast",
+        autoClose:2000,
+        progressBar: false,
       })
     } catch (err) {
       console.log(err);
-      toast.error("Enter a Valid Phone number");
+      toast.error("Enter a Valid Phone number",{
+        autoClose:2000,
+        progressBar:false,
+        className: "custom-error-toast",
+        icon: <CustomErrorIcon />,
+
+      });
     }
   }
 

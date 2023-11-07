@@ -10,6 +10,7 @@ import { phoneNoRules, emailRules, nameRules } from "../../data/formRules";
 import { generateOtp, registerUser } from "../../api/userRequests";
 import { useNavigate } from "react-router-dom";
 import { useFormData } from "../../context/context";
+import CustomErrorIcon from "../custom/customErrorIcon";
 const RegisterForm = () => {
   const {
     register,
@@ -18,7 +19,7 @@ const RegisterForm = () => {
     formState: { errors },
   } = useForm();
   const [formData, setFormData] = useState(null);
-  const {userData,dispatch} = useFormData()
+  const { userData, dispatch } = useFormData();
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,27 +38,43 @@ const RegisterForm = () => {
         openModal();
       } catch (err) {
         console.log(err);
-        toast.error("Enter a Valid Phone number");
+        toast.error("Enter a Valid Phone number", {
+          autoClose:2000,
+          progressBar: false,
+          className: "custom-error-toast",
+          icon: <CustomErrorIcon />,
+        });
       }
       //
     }
   };
+useEffect(()=>{
+ if(errors){
+  errorCheck()
+ }
+},[errors])
 
   const errorCheck = (e) => {
     if (errors && errors.emailId) {
       toast.error(errors.emailId.message, {
-        autoClose: true,
-        closeOnClick: true,
+        autoClose:2000,
+        progressBar: false,
+        className: "custom-error-toast",
+        icon: <CustomErrorIcon />,
       }); // Set autoClose to false
     } else if (errors.fullName) {
       toast.error(errors.fullName.message, {
-        autoClose: true,
-        closeOnClick: true,
+        autoClose:2000,
+        progressBar: false,
+        className: "custom-error-toast",
+        icon: <CustomErrorIcon />,
       });
     } else if (errors.phoneNumber) {
       toast.error(errors.phoneNumber.message, {
-        autoClose: true,
-        closeOnClick: true,
+        autoClose:2000,
+        progressBar: false,
+        className: "custom-error-toast",
+        icon: <CustomErrorIcon />,
       });
     }
   };
@@ -77,18 +94,17 @@ const RegisterForm = () => {
   const FormSubmit = async () => {
     try {
       const { data } = await registerUser(formData);
-      
-      if (data)
-      dispatch({type:"LOGGED_IN",payload:formData})
-        toast.success("Logged In!", {
-         autoClose:true,
-         closeOnClick:true ,
-          className:"custom-success-toast"    
-        })
-          navigate("/birthday-info");
+
+      if (data) dispatch({ type: "LOGGED_IN", payload: formData });
+      toast.success("Logged In!", {
+        autoClose:2000,
+        progressBar: false,
+        className: "custom-success-toast",
+      });
+      navigate("/birthday-info");
       console.log("response", data);
     } catch (err) {
-      console.log("error",err);
+      console.log("error", err);
     }
   };
 

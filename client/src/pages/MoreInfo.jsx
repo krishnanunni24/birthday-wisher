@@ -27,8 +27,10 @@ const MoreInfo = ({page}) => {
     }else{
       console.log("gender:",selectedGender,"mood:",selectedMood,"genre:",selectedGenre)
       toast.error("Selection Required for all fields!",{
-        className:"custom-error-toast",
-        icon:<CustomErrorIcon/>
+        autoClose:2000,
+        progressBar:false,
+        className: "custom-error-toast",
+        icon: <CustomErrorIcon />,
       })
   };
   }
