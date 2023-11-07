@@ -7,7 +7,7 @@ import cadburryImg from "../assets/images/landing/cadburry_celebration_img.png"
 const Register = ({page}) => {
   return (
     <Wrapper page={page}>
-      <div className="absolute top-10 left-0 h-full overflow-hidden">
+      <div className="absolute top-10 left-0 h-full   overflow-hidden">
         <img src={cadburryImg} alt="" />
         <div className="absolute bottom-20 w-full">
           <div className="flex justify-center text-white font-bold text-2xl">

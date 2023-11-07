@@ -3,6 +3,7 @@ import Button from "./Button";
 import { submitOtp } from "../../api/userRequests";
 import { useNavigate } from "react-router-dom";
 import CustomErrorIcon from "../custom/customErrorIcon";
+import { toast } from "react-toastify";
 
 const OtpModal = ({ closeModal, isModalOpen , phone ,FormSubmit}) => {
   const [otp, setOtp] = useState("");
@@ -87,6 +88,18 @@ const OtpModal = ({ closeModal, isModalOpen , phone ,FormSubmit}) => {
       console.error("otp submit failed",err);
     }
   };
+  const generateOtp =async () =>{
+    try {
+      const { data } = await generateOtp(phone);
+      console.log("otp generated:", phone);
+      toast.success("New Otp generated!",{
+        className:"custom-success-toast"
+      })
+    } catch (err) {
+      console.log(err);
+      toast.error("Enter a Valid Phone number");
+    }
+  }
 
   return (
     <>
@@ -133,9 +146,9 @@ const OtpModal = ({ closeModal, isModalOpen , phone ,FormSubmit}) => {
                   onChange={(e) => handleOtpChange(e, 3)}
                 />
               </div>
-              <div className="flex justify-end text-background font-bold text-sm underline pe-3">
+              <a onClick={()=>{generateOtp()}} className="flex justify-end text-background font-bold text-sm underline pe-3">
                 Resent OTP
-              </div>
+              </a>
 
 
               <div className="flex justify-center pt-2">

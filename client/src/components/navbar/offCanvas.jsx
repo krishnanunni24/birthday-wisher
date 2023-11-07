@@ -32,7 +32,7 @@ const OffCanvas = ({ isOffcanvasOpen, handleClose }) => {
   return (
     <>
       {isOffcanvasOpen ? (
-        <div className="fixed top-0 left-0 h-full z-40 w-full backdrop-blur-md">
+        <div className="fixed top-0 left-0 h-full z-50  w-full backdrop-blur-md">
           <div className="relative h-full offCanvas-content">
             {/* off-canvas component */}
             <div className="fixed top-0 right-0 h-full w-3/5 z-50 bg-background">
@@ -44,17 +44,17 @@ const OffCanvas = ({ isOffcanvasOpen, handleClose }) => {
                 />
               </button>
 
-              <div className="flex flex-col justify-center  h-full">
-                <div className="flex ps-4 justify-end pe-8 text-lg font-extrabold text-white  border-t-violet-600 border-b-indigo-600 border-y-2 py-4">
+              <div className="flex flex-col justify-center h-full divide-y-2 divide-indigo-500">
+                <div className="flex ps-4 justify-end px-2 text-lg font-extrabold text-white  border-t-violet-600 border-b-indigo-600 border-y-2 py-4">
                   <span className="flex justify-end">How to participate</span>
                 </div>
-                <div className="flex ps-4 justify-end pe-8  text-lg   font-extrabold text-white  border-t-violet-600 border-b-indigo-600 border-y-2 py-4">
+                <div className="flex  ps-4 justify-end px-2 text-lg   font-extrabold text-white  border-t-violet-600 border-b-indigo-600 border-y-2 py-4">
                   <span className="flex justify-end">Terms & Conditions</span>
                 </div>
-                <div className="flex ps-4 justify-end pe-8 text-lg   font-extrabold text-white  border-t-violet-600 border-b-indigo-600 border-y-2 py-4">
+                <div className="flex ps-4 justify-end px-2 text-lg   font-extrabold text-white  border-t-violet-600 border-b-indigo-600 border-y-2 py-4">
                   <span className="flex justify-end">Privacy Policy</span>
                 </div>
-                <div className="flex ps-4 justify-end  pe-8  text-lg  font-extrabold text-white  border-t-violet-600 border-b-indigo-600 border-y-2 py-4">
+                <div className="flex ps-4 justify-end px-2 text-lg  font-extrabold text-white  border-t-violet-600 border-b-indigo-600 border-y-2 py-4">
                   <span className="flex justify-end">Contact Us</span>
                 </div>
               </div>

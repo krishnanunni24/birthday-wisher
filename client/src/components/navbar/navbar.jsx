@@ -16,12 +16,12 @@ const Navbar = () => {
   return (
     <>
     
-    <div className="flex justify-between h-14 bg-[#1f0044] px-3">
+    <div className="flex justify-between h-14 z-40 bg-[#1f0044] px-3">
       <div className="flex gap-3">
-        <a href="#" className="flex px-2 py-2">
+        <a href="/" className="flex px-2 py-2">
           <img src={icon1} alt="" />
         </a>
-        <a href="#" className="flex px-2 py-2">
+        <a href="/" className="flex px-2 py-2">
           <img src={icon2} alt="" />
         </a>
       </div>

@@ -36,7 +36,7 @@ const MoreInfo = ({page}) => {
 
   return (
     <Wrapper page={page}>
-      <div className="absolute top-28 w-full h-full overflow-hidden">
+      <div className="absolute top-28 z-10 w-full h-full overflow-hidden">
         <div className="flex justify-center pt-5">
           <p className="text-white  text-center font-bold">
             What would you like their song's <br /> vibe to be?
