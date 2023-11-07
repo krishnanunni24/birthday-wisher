@@ -47,7 +47,7 @@ const SongReady = ({page}) => {
                 </p>
               </div>
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center items-center">
               <span className="border-e-background border-e-4  w-full">
                 <Button name="Share" textColor="background" icon={shareIcon} />
               </span>
@@ -59,12 +59,13 @@ const SongReady = ({page}) => {
                   name="Download"
                   handleClick={handleDownload}
                   icon={downloadIcon}
+                  iconSize={"h-10 w-10"}
                 />
               </span>
             </div>
           </div>
 
-          <div className="fixed  bottom-0 flex justify-center gap-2 w-full  h-36 items-center pt-8">
+          <div className="fixed  bottom-5 flex justify-center gap-2 w-full  items-center">
             <Button
               name="Redeem Gift"
               handleClick={redeemGift}

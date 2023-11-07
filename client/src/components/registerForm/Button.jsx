@@ -8,6 +8,7 @@ const Button = ({
   textColor,
   disabled,
   icon,
+  iconSize
 }) => {
   const buttonStyle = `px-4 py-2 ${
     !disabled && backgroundColor ? backgroundColor : "bg-secondary"
@@ -30,7 +31,7 @@ const Button = ({
           {name}
           {icon && (
             <span>
-              <img className="bg-blue-100" src={icon} alt="" />
+              <img className={`bg-blue-100 ${iconSize && (iconSize)}`} src={icon} alt="" />
             </span>
           )}
         </span>
