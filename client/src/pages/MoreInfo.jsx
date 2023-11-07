@@ -68,7 +68,7 @@ const MoreInfo = ({page}) => {
             />
           </div>
         </div>
-        <div className="fixed bottom-0 flex justify-center w-full  h-36 items-center">
+        <div className="fixed bottom-5 flex justify-center w-full items-center">
           <Button name="Proceed" handleClick={onInfoSubmit} />
         </div>
       </div>
