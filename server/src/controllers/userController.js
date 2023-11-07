@@ -124,18 +124,18 @@ const generateSong = async (req, res) => {
   const { lyrics } = req.body;
   console.log("lyrics:",lyrics)
   const tts = new gtts(lyrics, "en");
-  tts.save("src/audio/audio.mp3", (err, result) => {
+  tts.save("audio/audio.mp3", (err, result) => {
     if (err) {
       console.error("errorInSaving",err);
       return res.status(500).json({ error: "Audio generation failed" });
     } 
     console.log("save_success:",result)
-    res.sendFile(path.resolve("src/audio/audio.mp3"),(err)=>{
+    res.sendFile(path.resolve("audio/audio.mp3"),(err)=>{
         if(err){
             console.error("sendfileerr:",err)
             res.status(500).json({error:'Sending audio failed'})
         }
-        fs.unlink("src/audio/audio.mp3",(err)=>{
+        fs.unlink("audio/audio.mp3",(err)=>{
             if(err){
                 console.error(err)
             }
