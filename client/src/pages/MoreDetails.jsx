@@ -105,7 +105,7 @@ const MoreDetails = ({ page }) => {
             </div>
           </div>
         </div>
-        <div className="fixed bottom-0 flex justify-center gap-2 w-full  h-36 items-center pt-8">
+        <div className="fixed bottom-5 flex justify-center gap-2 w-full items-center pt-8">
           <Button
             name="Answer More"
             handleClick={onAnswerMore}
