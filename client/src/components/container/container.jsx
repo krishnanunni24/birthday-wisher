@@ -15,7 +15,6 @@ const Container = ({
       // Otherwise, select the clicked option and deselect the previous one
       setSelectedOption({i,name});
     }
-    console.log("option:", name);
   };
 
   return (

@@ -13,7 +13,6 @@ const OffCanvas = ({ isOffcanvasOpen, handleClose }) => {
           event.target !== hamButton
         ) {
           // Click occurred outside the modal, so close it
-          console.log("ham", hamButton);
           handleClose();
         }
       }

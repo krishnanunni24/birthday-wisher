@@ -41,6 +41,12 @@ const OtpModal = ({ closeModal, isModalOpen , phone ,FormSubmit}) => {
   }, []);
 
   useEffect(() => {
+    if(isModalOpen){
+    toast.info("Check your whatsapp for otp!",{
+      progressBar:false,
+      autoClose:2000,
+    })
+    }
     // Add a click event listener to the document body
     const handleClickOutside = (event) => {
       if (isModalOpen) {
@@ -52,8 +58,6 @@ const OtpModal = ({ closeModal, isModalOpen , phone ,FormSubmit}) => {
           !modal.contains(event.target) &&
           event.target !== submitButton
         ) {
-          // Click occurred outside the modal, so close it
-          console.log("everntarget:", event.target);
           closeModal();
         }
       }
@@ -61,7 +65,6 @@ const OtpModal = ({ closeModal, isModalOpen , phone ,FormSubmit}) => {
 
     document.body.addEventListener("click", handleClickOutside);
 
-    // Cleanup the event listener when the component unmounts
     return () => {
       document.body.removeEventListener("click", handleClickOutside);
     };

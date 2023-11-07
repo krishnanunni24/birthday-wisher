@@ -26,14 +26,10 @@ const BirthdayInfoForm = () => {
   const handleSelectChange = (event) => {
     const newValue = event.target.value;
     setSelectedValue(newValue);
-    console.log("Selected value:", newValue);
   };
 
   const onFormSubmit = ({ name }, ) => {
-   
-    console.log("name", name);
-    console.log("selectedValue", selectedValue);
-    console.log("age:", age);
+
     const data = {
       name: name,
       gender: selectedValue,
