@@ -6,12 +6,12 @@ import bgImg from "../assets/images/landing/background_style.png"
 import Background from '../components/wrapper/background'
 const LandingPage=()=> {
     const navigate=useNavigate()
-    // useEffect(()=>{
-    // const timeOut = setTimeout(()=>{
-    // navigate("/register")
-    // },3000)
-    // return ()=> clearTimeout(timeOut)
-    // },[])
+    useEffect(()=>{
+    const timeOut = setTimeout(()=>{
+    navigate("/register")
+    },3000)
+    return ()=> clearTimeout(timeOut)
+    },[])
 
   return (
  <Background>
