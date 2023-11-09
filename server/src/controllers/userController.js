@@ -44,7 +44,7 @@ const getOtpController = async (req, res) => {
 
     client.verify.v2
       .services(process.env.VERIFICATION_SID)
-      .verifications.create({ to: `+91${phone}`, channel: "whatsapp" })
+      .verifications.create({ to: `+91${phone}`, channel: "sms" })
       .then((verification) => {
         console.log(verification.sid);
         return res.status(200).json(verification);
