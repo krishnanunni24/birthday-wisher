@@ -28,6 +28,7 @@ const MoreInfo = ({page}) => {
       console.log("gender:",selectedGender,"mood:",selectedMood,"genre:",selectedGenre)
       toast.error("Selection Required for all fields!",{
         autoClose:2000,
+        toastId:"custom-toast-id",
         progressBar:false,
         className: "custom-error-toast",
         icon: <CustomErrorIcon />,

@@ -20,6 +20,7 @@ const Lyrics = ({page}) => {
       console.log(response);
       dispatch({type:"UPDATE_LYRICS", payload:response.data.result})
       toast.success("Lyrics Recreated!",{
+        toastId:"custom-toast-id",
         autoClose:2000,
         progressBar: false,
         className: "custom-success-toast",        
@@ -28,6 +29,7 @@ const Lyrics = ({page}) => {
       console.log(err);
       toast.error("Something went wrong!Recreation failed",{
         autoClose:2000,
+        toastId:"custom-toast-id",
         progressBar:false,
         className: "custom-error-toast",
         icon: <CustomErrorIcon />,
@@ -44,6 +46,7 @@ const Lyrics = ({page}) => {
        dispatch({type:"UPDATE_AUDIO_URL",payload:url})
        toast.success("Song generated",{
         autoClose:2000,
+        toastId:"custom-toast-id",
         progressBar: false,
         className: "custom-success-toast",       })
        navigate("/ready")

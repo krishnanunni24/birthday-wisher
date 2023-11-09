@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import Input from "./input";
@@ -10,7 +10,6 @@ import { generateOtp, registerUser } from "../../api/userRequests";
 import { useNavigate } from "react-router-dom";
 import { useFormData } from "../../context/context";
 import CustomErrorIcon from "../custom/customErrorIcon";
-
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState(null);
@@ -27,7 +26,7 @@ const RegisterForm = () => {
   const openModal = () => {
     setIsModalOpen(true);
   };
-  
+
   const handleFormSubmit = async (FormData, e) => {
     e.preventDefault();
 
@@ -41,6 +40,7 @@ const RegisterForm = () => {
         console.log(err);
         toast.error("Enter a Valid Phone number", {
           autoClose: 2000,
+          toastId: "custom-toast-id",
           progressBar: false,
           className: "custom-error-toast",
           icon: <CustomErrorIcon />,
@@ -50,6 +50,7 @@ const RegisterForm = () => {
     } else {
       toast.error("Accept terms & Conditions", {
         autoClose: 2000,
+        toastId: "custom-toast-id",
         progressBar: false,
         className: "custom-error-toast",
         icon: <CustomErrorIcon />,
@@ -76,6 +77,7 @@ const RegisterForm = () => {
       if (data) dispatch({ type: "LOGGED_IN", payload: formData });
       toast.success("Logged In!", {
         autoClose: 2000,
+        toastId: "custom-toast-id",
         progressBar: false,
         className: "custom-success-toast",
       });
@@ -96,6 +98,7 @@ const RegisterForm = () => {
       toast.error(err.emailId.message, {
         autoClose: 2000,
         progressBar: false,
+        toastId: "custom-toast-id",
         className: "custom-error-toast",
         icon: <CustomErrorIcon />,
       }); // Set autoClose to false
@@ -103,6 +106,7 @@ const RegisterForm = () => {
       toast.error(err.fullName.message, {
         autoClose: 2000,
         progressBar: false,
+        toastId: "custom-toast-id",
         className: "custom-error-toast",
         icon: <CustomErrorIcon />,
       });
@@ -110,6 +114,7 @@ const RegisterForm = () => {
       toast.error(err.phoneNumber.message, {
         autoClose: 2000,
         progressBar: false,
+        toastId: "custom-toast-id",
         className: "custom-error-toast",
         icon: <CustomErrorIcon />,
       });

@@ -43,6 +43,7 @@ const BirthdayInfoForm = () => {
     if (errors && errors.name) {
       toast.error(errors.name.message, {
         autoClose:2000,
+        toastId:"custom-toast-id",
         progressBar:false,
         className: "custom-error-toast",
         icon: <CustomErrorIcon />,

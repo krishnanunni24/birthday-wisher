@@ -61,6 +61,7 @@ const MoreDetails = ({ page }) => {
     if (e && e.petname)
       toast.error(e.petname.message, {
         autoClose:2000,
+        toastId:"custom-toast-id",
         progressBar:false,
         className: "custom-error-toast",
         icon: <CustomErrorIcon />,
@@ -68,6 +69,7 @@ const MoreDetails = ({ page }) => {
     else if (e && e.angry)
       toast.error(e.angry.message, {
         autoClose:2000,
+        toastId:"custom-toast-id",
         progressBar:false,
         className: "custom-error-toast",
         icon: <CustomErrorIcon />,
@@ -75,6 +77,7 @@ const MoreDetails = ({ page }) => {
     else if (e && e.funniestThing)
       toast.error(e.funniestThing.message, {
         autoClose:2000,
+        toastId:"custom-toast-id",
         progressBar:false,
         className: "custom-error-toast",
         icon: <CustomErrorIcon />,
@@ -82,6 +85,7 @@ const MoreDetails = ({ page }) => {
     else
       toast.error("All fields are required!", {
         autoClose:2000,
+        toastId:"custom-toast-id",
         progressBar:false,
         className: "custom-error-toast",
         icon: <CustomErrorIcon />,

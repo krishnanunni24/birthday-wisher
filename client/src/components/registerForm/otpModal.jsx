@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import CustomErrorIcon from "../custom/customErrorIcon";
 import { toast } from "react-toastify";
 
-const OtpModal = ({ closeModal, isModalOpen , phone ,FormSubmit}) => {
+const OtpModal = ({ closeModal, isModalOpen, phone, FormSubmit }) => {
   const [otp, setOtp] = useState("");
   const [otpError, setOtpError] = useState(false);
   const inputRefs = useRef([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleOtpChange = (event, index) => {
     const { value } = event.target;
@@ -41,12 +41,6 @@ const OtpModal = ({ closeModal, isModalOpen , phone ,FormSubmit}) => {
   }, []);
 
   useEffect(() => {
-    if(isModalOpen){
-    toast.info("Check your whatsapp for otp!",{
-      progressBar:false,
-      autoClose:2000,
-    })
-    }
     // Add a click event listener to the document body
     const handleClickOutside = (event) => {
       if (isModalOpen) {
@@ -72,59 +66,63 @@ const OtpModal = ({ closeModal, isModalOpen , phone ,FormSubmit}) => {
 
   const handleSubmit = async () => {
     console.log("submit");
-  if(!otp) return toast.error("check whatsapp for otp!",{
-    autoClose:2000,
-    progressBar:false,
+    if (!otp)
+      return toast.error("Enter the OTP you received as sms", {
+        autoClose: 2000,
+        progressBar: false,
         className: "custom-error-toast",
         icon: <CustomErrorIcon />,
-  })
+      });
     const Data = {
       otp,
       phone,
     };
     try {
       const { data } = await submitOtp(Data);
-      if(data.message === "otp verified"){
-        FormSubmit()
-      }else{
-        setOtp("")
-        toast.error("otp incorrect",{
-          autoClose:2000,
-        progressBar:false,
-        className: "custom-error-toast",
-        icon: <CustomErrorIcon />,
-        })
+      if (data.message === "otp verified") {
+        FormSubmit();
+      } else {
+        setOtp("");
+        toast.error("otp incorrect", {
+          autoClose: 2000,
+          toastId: "custom-toast-id",
+          progressBar: false,
+          className: "custom-error-toast",
+          icon: <CustomErrorIcon />,
+        });
       }
     } catch (err) {
-      console.error("otp submit failed",err);
-      toast.error("otp Incorrect!",{
-        autoClose:2000,
-        progressBar:false,
+      console.error("otp submit failed", err);
+      toast.error("otp Incorrect!", {
+        toastId:"custom-toast-id",
+        autoClose: 2000,
+        progressBar: false,
         className: "custom-error-toast",
         icon: <CustomErrorIcon />,
-      })
+      });
     }
   };
-  const generateOtp =async () =>{
+  const generateOtp = async () => {
     try {
       const { data } = await generateOtp(phone);
       console.log("otp generated:", phone);
-      toast.success("New Otp generated!",{
-        className:"custom-success-toast",
-        autoClose:2000,
+      toast.success("New Otp generated!", {
+        toastId:"custom-toast-id",
+        className: "custom-success-toast",
+        autoClose: 2000,
+        preventDuplicates: true,
         progressBar: false,
-      })
+      });
     } catch (err) {
       console.log(err);
-      toast.error("Enter a Valid Phone number",{
-        autoClose:2000,
-        progressBar:false,
+      toast.error("Enter a Valid Phone number", {
+        autoClose: 2000,
+        progressBar: false,
         className: "custom-error-toast",
         icon: <CustomErrorIcon />,
-
       });
     }
-  }
+  };
 
   return (
     <>
@@ -171,10 +169,14 @@ const OtpModal = ({ closeModal, isModalOpen , phone ,FormSubmit}) => {
                   onChange={(e) => handleOtpChange(e, 3)}
                 />
               </div>
-              <a onClick={()=>{generateOtp()}} className="flex justify-end text-background font-bold text-sm underline pe-3">
+              <a
+                onClick={() => {
+                  generateOtp();
+                }}
+                className="flex justify-end text-background font-bold text-sm underline pe-3"
+              >
                 Resent OTP
               </a>
-
 
               <div className="flex justify-center pt-2">
                 <Button handleClick={handleSubmit} name="Submit" />
