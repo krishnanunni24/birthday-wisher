@@ -3,10 +3,8 @@ const UserModel = require("../model/userSchema");
 const { default: OpenAI } = require("openai");
 const gtts = require("gtts");
 const fs = require("fs");
-const os = require('os');
-const path = require('path');
-
-
+const os = require("os");
+const path = require("path");
 
 const registerController = async (req, res) => {
   console.log("register-req:", req.body);
@@ -48,11 +46,16 @@ const getOtpController = async (req, res) => {
       .then((verification) => {
         console.log(verification.sid);
         return res.status(200).json(verification);
-      }).catch((err)=>{
-      console.log("err:",err)
+      })
+      .catch((err) => {
+        if (err.status === 429) {
+          console.log("code:", err.code);
+          return res.status(429).json({ code: 60203 });
+        }
       });
   } catch (err) {
     console.error("server error", err);
+
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -125,7 +128,7 @@ const generateLyrics = async (req, res) => {
   }
 };
 
-const appPrefix = 'my-app';
+const appPrefix = "my-app";
 
 const generateSong = async (req, res) => {
   try {
@@ -136,9 +139,9 @@ const generateSong = async (req, res) => {
     let tmpDir;
     try {
       tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), appPrefix));
-      const audioFilePath = path.join(tmpDir, 'audio.mp3');
-      
-      const tts = new gtts(lyrics, 'en');
+      const audioFilePath = path.join(tmpDir, "audio.mp3");
+
+      const tts = new gtts(lyrics, "en");
       tts.save(audioFilePath, (err, result) => {
         if (err) {
           console.error("errorInSaving", err);
@@ -146,25 +149,30 @@ const generateSong = async (req, res) => {
         }
 
         console.log("save_success:", result);
-        
+
         // Send the audio file to the response
         res.sendFile(audioFilePath, (err) => {
           if (err) {
             console.error("sendfileerr:", err);
-            res.status(500).json({ error: 'Sending audio failed' });
+            res.status(500).json({ error: "Sending audio failed" });
           }
-          
+
           // Clean up the temporary directory and file
           fs.rmSync(tmpDir, { recursive: true });
         });
       });
     } catch (e) {
-      console.error('An error occurred while creating a temporary directory:', e);
-      return res.status(500).json({ error: 'Temporary directory creation failed' });
+      console.error(
+        "An error occurred while creating a temporary directory:",
+        e
+      );
+      return res
+        .status(500)
+        .json({ error: "Temporary directory creation failed" });
     }
   } catch (error) {
-    console.error( "error:",error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("error:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 

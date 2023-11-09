@@ -38,13 +38,20 @@ const RegisterForm = () => {
         openModal();
       } catch (err) {
         console.log(err);
+        console.log("OTP generation error:",err);
+        if(err.response?.status === 429){ return toast.error("You have reached the maximum attempt! try again later", {
+          autoClose: 2000,
+          progressBar: false,
+          className: "custom-error-toast",
+          icon: <CustomErrorIcon />,
+        }) } else{
         toast.error("Enter a Valid Phone number", {
           autoClose: 2000,
           toastId: "custom-toast-id",
           progressBar: false,
           className: "custom-error-toast",
           icon: <CustomErrorIcon />,
-        });
+        });}
       }
       //
     } else {

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Button from "./Button";
-import { submitOtp } from "../../api/userRequests";
+import { generateOtp, submitOtp } from "../../api/userRequests";
 import { useNavigate } from "react-router-dom";
 import CustomErrorIcon from "../custom/customErrorIcon";
 import { toast } from "react-toastify";
@@ -106,7 +106,7 @@ const OtpModal = ({ closeModal, isModalOpen, phone, FormSubmit }) => {
       });
     }
   };
-  const generateOtp = async () => {
+  const GenerateOtp = async () => {
     try {
       const { data } = await generateOtp(phone);
       console.log("otp generated:", phone);
@@ -117,14 +117,22 @@ const OtpModal = ({ closeModal, isModalOpen, phone, FormSubmit }) => {
         preventDuplicates: true,
         progressBar: false,
       });
+      inputRefs.current[0].focus(); 
     } catch (err) {
-      console.log(err);
+      console.log("OTP generation error:",err);
+      if(err.response?.status === 429){ return toast.error("You have reached the maximum attempt! try again later", {
+        autoClose: 2000,
+        progressBar: false,
+        className: "custom-error-toast",
+        icon: <CustomErrorIcon />,
+      }) }else {
       toast.error("Enter a Valid Phone number", {
         autoClose: 2000,
         progressBar: false,
         className: "custom-error-toast",
         icon: <CustomErrorIcon />,
       });
+    }
     }
   };
 
@@ -177,9 +185,9 @@ const OtpModal = ({ closeModal, isModalOpen, phone, FormSubmit }) => {
               </div>
               <a
                 onClick={() => {
-                  generateOtp();
+                  GenerateOtp();
                 }}
-                className="flex justify-end text-background font-bold text-sm underline pe-3"
+                className="flex justify-end text-background  font-bold text-sm underline pe-3"
               >
                 Resent OTP
               </a>
