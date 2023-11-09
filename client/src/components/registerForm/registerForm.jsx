@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { toast } from "react-toastify";
-
 import { useForm } from "react-hook-form";
 import Input from "./input";
 import CheckBox from "./checkBox";
@@ -11,25 +10,27 @@ import { generateOtp, registerUser } from "../../api/userRequests";
 import { useNavigate } from "react-router-dom";
 import { useFormData } from "../../context/context";
 import CustomErrorIcon from "../custom/customErrorIcon";
-const RegisterForm = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
-  const [formData, setFormData] = useState(null);
-  const { userData, dispatch } = useFormData();
-  const navigate = useNavigate();
 
+
+const RegisterForm = () => {
+  const [formData, setFormData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [checkBox1, setCheckBox1] = useState(false);
   const [checkBox2, setCheckBox2] = useState(false);
+
+  const navigate = useNavigate();
+  const { register, handleSubmit } = useForm({
+    shouldFocusError: false,
+  });
+  const { dispatch } = useFormData();
+
   const openModal = () => {
     setIsModalOpen(true);
   };
+  
   const handleFormSubmit = async (FormData, e) => {
     e.preventDefault();
+
     if (checkBox1 && checkBox2) {
       setFormData(FormData);
       try {
@@ -39,39 +40,16 @@ const RegisterForm = () => {
       } catch (err) {
         console.log(err);
         toast.error("Enter a Valid Phone number", {
-          autoClose:2000,
+          autoClose: 2000,
           progressBar: false,
           className: "custom-error-toast",
           icon: <CustomErrorIcon />,
         });
       }
       //
-    }
-  };
-useEffect(()=>{
- if(errors){
-  errorCheck()
- }
-},[errors])
-
-  const errorCheck = (e) => {
-    if (errors && errors.emailId) {
-      toast.error(errors.emailId.message, {
-        autoClose:2000,
-        progressBar: false,
-        className: "custom-error-toast",
-        icon: <CustomErrorIcon />,
-      }); // Set autoClose to false
-    } else if (errors.fullName) {
-      toast.error(errors.fullName.message, {
-        autoClose:2000,
-        progressBar: false,
-        className: "custom-error-toast",
-        icon: <CustomErrorIcon />,
-      });
-    } else if (errors.phoneNumber) {
-      toast.error(errors.phoneNumber.message, {
-        autoClose:2000,
+    } else {
+      toast.error("Accept terms & Conditions", {
+        autoClose: 2000,
         progressBar: false,
         className: "custom-error-toast",
         icon: <CustomErrorIcon />,
@@ -97,7 +75,7 @@ useEffect(()=>{
 
       if (data) dispatch({ type: "LOGGED_IN", payload: formData });
       toast.success("Logged In!", {
-        autoClose:2000,
+        autoClose: 2000,
         progressBar: false,
         className: "custom-success-toast",
       });
@@ -108,9 +86,39 @@ useEffect(()=>{
     }
   };
 
+  const onError = (err, e) => {
+    console.log("error", err);
+    console.log("e", e);
+    document.activeElement.blur();
+    e.preventDefault();
+
+    if (err && err.emailId) {
+      toast.error(err.emailId.message, {
+        autoClose: 2000,
+        progressBar: false,
+        className: "custom-error-toast",
+        icon: <CustomErrorIcon />,
+      }); // Set autoClose to false
+    } else if (err.fullName) {
+      toast.error(err.fullName.message, {
+        autoClose: 2000,
+        progressBar: false,
+        className: "custom-error-toast",
+        icon: <CustomErrorIcon />,
+      });
+    } else if (err.phoneNumber) {
+      toast.error(err.phoneNumber.message, {
+        autoClose: 2000,
+        progressBar: false,
+        className: "custom-error-toast",
+        icon: <CustomErrorIcon />,
+      });
+    }
+  };
+
   return (
     <div className="flex-col">
-      <form onSubmit={handleSubmit(handleFormSubmit)}>
+      <form onSubmit={handleSubmit(handleFormSubmit, onError)}>
         <Input
           name="phoneNumber"
           type="number"
@@ -144,7 +152,7 @@ useEffect(()=>{
           checked={checkBox2}
           onChange={handleCheck2Click}
         />
-        <Button name="Submit" type="Submit" handleClick={errorCheck} />
+        <Button name="Submit" type="Submit" />
       </form>
       <OtpModal
         isModalOpen={isModalOpen}

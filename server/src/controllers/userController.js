@@ -48,6 +48,8 @@ const getOtpController = async (req, res) => {
       .then((verification) => {
         console.log(verification.sid);
         return res.status(200).json(verification);
+      }).catch((err)=>{
+      console.log("err:",err)
       });
   } catch (err) {
     console.error("server error", err);
