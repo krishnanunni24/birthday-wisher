@@ -41,6 +41,9 @@ const OtpModal = ({ closeModal, isModalOpen, phone, FormSubmit }) => {
   }, []);
 
   useEffect(() => {
+    if(isModalOpen){
+      inputRefs.current[0].focus(); 
+    }
     // Add a click event listener to the document body
     const handleClickOutside = (event) => {
       if (isModalOpen) {
@@ -64,7 +67,8 @@ const OtpModal = ({ closeModal, isModalOpen, phone, FormSubmit }) => {
     };
   }, [isModalOpen, closeModal]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     console.log("submit");
     if (!otp)
       return toast.error("Enter the OTP you received as sms", {
@@ -132,10 +136,12 @@ const OtpModal = ({ closeModal, isModalOpen, phone, FormSubmit }) => {
             <div className="h-60 rounded-xl px-12 bg-white py-3 text-center">
               <h1 className="text-2xl font-bold">Enter OTP</h1>
 
+              <form>
               <div
                 id="otp"
                 className="mt-5 flex flex-row justify-center px-2 text-center"
               >
+
                 <input
                   ref={(ref) => (inputRefs.current[0] = ref)}
                   className="form-control m-2 h-10 w-10 rounded border text-center bg-background text-secondary font-bold focus:border-secondary focus:border-4"
@@ -179,8 +185,9 @@ const OtpModal = ({ closeModal, isModalOpen, phone, FormSubmit }) => {
               </a>
 
               <div className="flex justify-center pt-2">
-                <Button handleClick={handleSubmit} name="Submit" />
+                <Button handleClick={handleSubmit} name="Submit" type="submit"/>
               </div>
+                  </form>
             </div>
           </div>
         </div>
